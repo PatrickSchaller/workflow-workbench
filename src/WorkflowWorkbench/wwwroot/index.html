@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Configure, version and run a small approval workflow. An independent .NET demonstration with parallel reviews, role checks and durable history.">
+  <title>Workflow Workbench | Define it. Run it. Explain it.</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to workspace</a>
+  <header>
+    <div class="brand"><span aria-hidden="true">⌘</span><div><strong>Workflow Workbench</strong><small>A definition is only half the story.</small></div></div>
+    <div class="identity"><label for="actor">Act as a demo person</label><select id="actor" aria-describedby="identity-note"></select></div>
+  </header>
+  <main>
+    <div class="intro"><div><h1>Define it. Run it. Explain it.</h1><p>Configure an approval flow, then follow a request through the real rules.</p></div><a href="https://github.com/PatrickSchaller/workflow-workbench">Source & walkthrough</a></div>
+    <p class="demo-note" id="identity-note">Local demonstration with fictional people and equipment requests. The identity picker simulates sign-in; server-side role checks still apply. Session cookies reset when the server restarts.</p>
+    <div class="view-switch" role="group" aria-label="Workspace view"><button type="button" id="show-designer" aria-pressed="true">Design a workflow</button><button type="button" id="show-runner" aria-pressed="false">Run a request</button></div>
+    <p id="message" role="status" aria-live="polite">Opening the workbench…</p>
+    <div id="workspace">
+      <section id="designer" aria-labelledby="designer-title">
+        <div class="section-heading"><div><h2 id="designer-title">Workflow designer</h2><p>Click a step to change its rules. Connections come from prerequisites.</p></div><span class="version-badge" id="draft-state"></span></div>
+        <div class="designer-toolbar"><label>Workflow name<input id="workflow-name" maxlength="80" required></label><label>Start from a published version<select id="version"></select></label><button type="button" id="discard">Discard draft</button><button type="button" id="publish" class="primary">Publish new version</button></div>
+        <p class="hint">Draft edits stay in this page until published. Publishing creates a new version; existing requests keep their original rules.</p>
+        <div class="designer-layout">
+          <div class="graph-panel"><div class="graph-toolbar"><strong>Steps & connections</strong><button type="button" id="add-step">Add review step</button></div><div id="designer-graph" class="graph-scroll" tabindex="0" role="region" aria-label="Designer workflow graph, horizontally scrollable if needed"></div><p class="graph-note">One start, parallel branches, one finish. A step opens when every prerequisite is complete.</p></div>
+          <form id="step-form" class="inspector"><h3>Selected step</h3><fieldset id="step-fields"><label>Step ID<input id="step-id" readonly></label><label>Step name<input id="step-name" maxlength="60" required></label><label>Assigned role<select id="step-role"></select></label><label>Confirmation question <span class="optional">(optional)</span><input id="step-question" maxlength="180"></label><fieldset class="prerequisites"><legend>Wait for these steps</legend><div id="step-requires"></div></fieldset><p class="hint">An empty prerequisite list makes this the starting step. A question requires confirmation before completion.</p><div class="inspector-actions"><button type="button" id="remove-step">Remove step</button></div></fieldset><p class="hint" id="designer-permission"></p></form>
+        </div>
+        <details class="definition-details"><summary>Inspect the draft definition</summary><pre id="definition-json"></pre></details>
+      </section>
+      <section id="runner" aria-labelledby="runner-title" hidden>
+        <div class="section-heading"><div><h2 id="runner-title">Request runner</h2><p>Use the identity picker to act as each reviewer. Watch the parallel steps and join.</p></div><button type="button" id="reload-run">Reload request</button></div>
+        <form id="create-run" class="create-run"><label>New equipment request<input id="request-title" value="Replacement label printer" maxlength="100" required></label><button type="submit" class="primary" id="create-button">Create request</button><p id="create-permission" class="hint"></p></form>
+        <div class="runner-layout"><aside class="run-list"><h3>Recent requests</h3><div id="runs"></div></aside><div id="run-detail" hidden><div class="run-heading"><div><h3 id="run-title"></h3><p id="run-meta"></p></div><span class="status-badge" id="run-status"></span></div><div id="runner-graph" class="graph-scroll" tabindex="0" role="region" aria-label="Running workflow graph, horizontally scrollable if needed"></div><div class="legend"><span>○ Waiting</span><span>● Active</span><span>✓ Complete</span></div><form id="action-form" class="action-panel"><div><h3 id="action-title"></h3><p id="action-help"></p></div><fieldset id="action-fields"><label id="question-label" class="check"><input type="checkbox" id="confirmed"><span id="question-text"></span></label><label>Comment <span class="optional">(required when sending back)</span><textarea id="action-comment" maxlength="500" rows="2"></textarea></label><div class="action-buttons"><button type="submit" id="complete" class="primary">Complete step</button><button type="button" id="send-back">Send back to intake</button></div></fieldset></form><div class="history-heading"><h3>Committed history</h3><button type="button" id="export">Export request JSON</button></div><p class="hint">Sending back starts a new review cycle. Earlier actions stay in the history and do not count as current approvals.</p><ol id="history" class="history"></ol></div><p id="empty-run" class="empty">Choose the Requester identity and create a request to start the walkthrough.</p></div>
+      </section>
+    </div>
+    <footer><p>Independent portfolio example. Newly authored code and invented data. No company systems or notifications are connected.</p><p>Published definitions, request state and history use SQLite. This is a local demo, with no production identity provider or tamper-evident audit system.</p></footer>
+  </main>
+</body>
+</html>

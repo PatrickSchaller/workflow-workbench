@@ -1,0 +1,43 @@
+name: Build and verify
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  dotnet:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet restore WorkflowWorkbench.sln --locked-mode
+      - run: dotnet build WorkflowWorkbench.sln -c Release --no-restore
+      - run: dotnet test WorkflowWorkbench.sln -c Release --no-build
+      - run: dotnet publish src/WorkflowWorkbench -c Release --no-build -o artifacts/app
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: dotnet restore WorkflowWorkbench.sln --locked-mode
+      - run: dotnet build WorkflowWorkbench.sln -c Release --no-restore
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failure-traces
+          path: test-results/

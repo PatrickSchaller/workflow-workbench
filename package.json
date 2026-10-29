@@ -1,0 +1,8 @@
+{
+  "name": "workflow-workbench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "playwright test", "screenshots": "node tools/capture-screenshots.mjs" },
+  "devDependencies": { "@playwright/test": "1.64.1" }
+}

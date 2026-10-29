@@ -1,0 +1,230 @@
+{
+  "published": {
+    "version": 2,
+    "definition": {
+      "name": "Equipment request",
+      "steps": [
+        {
+          "id": "intake",
+          "name": "Request intake",
+          "role": "requester",
+          "requires": [],
+          "question": "Is the request description complete?"
+        },
+        {
+          "id": "operations",
+          "name": "Operations review",
+          "role": "operations",
+          "requires": [
+            "intake"
+          ],
+          "question": "Is the equipment needed for the work?"
+        },
+        {
+          "id": "finance",
+          "name": "Finance review",
+          "role": "finance",
+          "requires": [
+            "intake"
+          ],
+          "question": "Has the budget been checked?"
+        },
+        {
+          "id": "release",
+          "name": "Ready to order",
+          "role": "coordinator",
+          "requires": [
+            "operations",
+            "finance",
+            "technical"
+          ],
+          "question": "Are all required reviews ready for release?"
+        },
+        {
+          "id": "technical",
+          "name": "Technical review",
+          "role": "technical",
+          "requires": [
+            "intake"
+          ],
+          "question": "Is the equipment compatible with our setup?"
+        }
+      ]
+    },
+    "publishedAt": "2026-10-29T16:52:06.7523691+00:00",
+    "publishedBy": "Casey — Coordinator"
+  },
+  "oldRun": {
+    "id": "6050bf05-f9b4-419d-b5e0-180ba088bbfa",
+    "title": "Replacement label printer",
+    "definitionVersion": 1,
+    "revision": 2,
+    "cycle": 1,
+    "status": "in progress",
+    "steps": {
+      "intake": "complete",
+      "operations": "complete",
+      "finance": "active",
+      "release": "waiting"
+    },
+    "definition": {
+      "name": "Equipment request",
+      "steps": [
+        {
+          "id": "intake",
+          "name": "Request intake",
+          "role": "requester",
+          "requires": [],
+          "question": "Is the request description complete?"
+        },
+        {
+          "id": "operations",
+          "name": "Operations review",
+          "role": "operations",
+          "requires": [
+            "intake"
+          ],
+          "question": "Is the equipment needed for the work?"
+        },
+        {
+          "id": "finance",
+          "name": "Finance review",
+          "role": "finance",
+          "requires": [
+            "intake"
+          ],
+          "question": "Has the budget been checked?"
+        },
+        {
+          "id": "release",
+          "name": "Ready to order",
+          "role": "coordinator",
+          "requires": [
+            "operations",
+            "finance"
+          ],
+          "question": "Are all required reviews ready for release?"
+        }
+      ]
+    },
+    "history": [
+      {
+        "id": 1,
+        "at": "2026-10-29T16:52:06.6935171+00:00",
+        "actor": "Alex — Requester",
+        "action": "created",
+        "stepId": "",
+        "cycle": 1,
+        "comment": "New request",
+        "confirmed": null
+      },
+      {
+        "id": 2,
+        "at": "2026-10-29T16:52:06.7148138+00:00",
+        "actor": "Alex — Requester",
+        "action": "complete",
+        "stepId": "intake",
+        "cycle": 1,
+        "comment": "Reviewed for this demonstration.",
+        "confirmed": true
+      },
+      {
+        "id": 3,
+        "at": "2026-10-29T16:52:06.7345475+00:00",
+        "actor": "Morgan — Operations",
+        "action": "complete",
+        "stepId": "operations",
+        "cycle": 1,
+        "comment": "Reviewed for this demonstration.",
+        "confirmed": true
+      }
+    ]
+  },
+  "newRun": {
+    "id": "6a81045c-ecda-4c64-bcfe-4b6f200a6f7d",
+    "title": "Laptop setup request",
+    "definitionVersion": 2,
+    "revision": 1,
+    "cycle": 1,
+    "status": "in progress",
+    "steps": {
+      "intake": "complete",
+      "operations": "active",
+      "finance": "active",
+      "release": "waiting",
+      "technical": "active"
+    },
+    "definition": {
+      "name": "Equipment request",
+      "steps": [
+        {
+          "id": "intake",
+          "name": "Request intake",
+          "role": "requester",
+          "requires": [],
+          "question": "Is the request description complete?"
+        },
+        {
+          "id": "operations",
+          "name": "Operations review",
+          "role": "operations",
+          "requires": [
+            "intake"
+          ],
+          "question": "Is the equipment needed for the work?"
+        },
+        {
+          "id": "finance",
+          "name": "Finance review",
+          "role": "finance",
+          "requires": [
+            "intake"
+          ],
+          "question": "Has the budget been checked?"
+        },
+        {
+          "id": "release",
+          "name": "Ready to order",
+          "role": "coordinator",
+          "requires": [
+            "operations",
+            "finance",
+            "technical"
+          ],
+          "question": "Are all required reviews ready for release?"
+        },
+        {
+          "id": "technical",
+          "name": "Technical review",
+          "role": "technical",
+          "requires": [
+            "intake"
+          ],
+          "question": "Is the equipment compatible with our setup?"
+        }
+      ]
+    },
+    "history": [
+      {
+        "id": 4,
+        "at": "2026-10-29T16:52:06.7685848+00:00",
+        "actor": "Alex — Requester",
+        "action": "created",
+        "stepId": "",
+        "cycle": 1,
+        "comment": "New request",
+        "confirmed": null
+      },
+      {
+        "id": 5,
+        "at": "2026-10-29T16:52:06.7778881+00:00",
+        "actor": "Alex — Requester",
+        "action": "complete",
+        "stepId": "intake",
+        "cycle": 1,
+        "comment": "Reviewed for this demonstration.",
+        "confirmed": true
+      }
+    ]
+  }
+}
